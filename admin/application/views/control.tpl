@@ -2,10 +2,10 @@
 				<h2>Управление</h2>
 				<ul>
 					<li>
-						<a href="#" class="dropdown-button" id="1">Пользователи</a>
+						<a href="#" class="dropdown-button" data-ajax="true"  id="1">Пользователи</a>
 						<ul class="dropdown-list-1">
 							<li class="sectcenter-li">
-								<a href="#" class="" id="1-1">Айтем</a>
+								<a href="<?=$GLOBALS['CONFIG']['HTTP_HOST']?>/admin/control/users/" class="ajax-load" id="1-1">Все пользователи</a>
 							</li>
 						</ul>
 					</li>
@@ -14,13 +14,23 @@
 			<div class="sectright">
 
 			<div class="sectright-breadcrumbs">
-					<a href="#">Рабочий стол</a>
-					<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-					<a href="#">Настройки</a>
-					<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-					<a href="#">Настройки продукта</a>
-					<span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
-					<p>Настройка модулей</p>
+				<?php
+				$breadcrumbs_last_templ = new Template('<p>{#name#}<p>');
+				$breadcrumbs_templ = new Template('<a href="{#breadcrumb.href#}">{#breadcrumb.name#}</a><span><i class="fa fa-angle-right" aria-hidden="true"></i></span>');
+				
+				foreach($this->data['breadcrumbs'] as $name=>$url){
+					if ($url == end($this->data['breadcrumbs'])) {
+						$breadcrumbs_last_templ->reset();
+						$breadcrumbs_last_templ->setVar('name', $name);
+						echo $breadcrumbs_last_templ->getDom();
+					}
+					else {
+						$breadcrumbs_templ->reset();
+						$breadcrumbs_templ->setObject('breadcrumb', [ 'href' => $url, 'name' => $name, ]);
+						echo $breadcrumbs_templ->getDom();
+					}
+				}
+				?>
 			</div>
 				<h2><?=$this->data['header']?></h2>
 				<div class="sectright-filters">

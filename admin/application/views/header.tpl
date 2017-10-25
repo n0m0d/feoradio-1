@@ -9,6 +9,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<meta property="og:image" content="/admin/application/views/path/to/image.jpg">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+	<script src="/admin/application/views/js/chosen.jquery.js"></script>
+	<link rel="stylesheet" type="text/css"  href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.7.0/chosen.css" />
+	
 	<link rel="shortcut icon" href="/admin/application/views/img/favicon/favicon.ico" type="image/x-icon">
 	<link rel="apple-touch-icon" href="/admin/application/views/img/favicon/apple-touch-icon.png">
 	<link rel="apple-touch-icon" sizes="72x72" href="/admin/application/views/img/favicon/apple-touch-icon-72x72.png">
@@ -20,7 +26,6 @@
 	<meta name="theme-color" content="#000">
 	<meta name="msapplication-navbutton-color" content="#000">
 	<meta name="apple-mobile-web-app-status-bar-style" content="#000">
-
 </head>
 
 <body>

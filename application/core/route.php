@@ -7,44 +7,6 @@
 class Route
 {
 	function __construct()	{
-		/*
-		setVar("test", 'тест');
-		$attributes = new model_attributes();
-		$id = $attributes
-				//->debug_query_once()
-				//->register_query_once()
-				->register_query()
-				->InsertUpdate(array(
-				//->Insert(array(
-				//->Update(array(
-			"at_id" => 100,
-			"at_name" => uniqid(),
-			"at_type" => uniqid(),
-			"at_key" => uniqid(),
-			"at_defval" => uniqid(),
-			"at_comment" => uniqid(),
-		));
-		$attributes
-				->Update(array(
-			"at_id" => 100,
-			"at_name" => uniqid(),
-			"at_type" => uniqid(),
-			"at_key" => uniqid(),
-			"at_defval" => uniqid(),
-			"at_comment" => uniqid(),
-		), 100);
-		
-		$attributes
-				//->register_query_once()
-				->Delete('at_id>4');
-		
-		$result = $attributes->getItemWhere(100);
-		$result = setVar("test", 'тест');
-		$result = getVar("test");
-		delVar("test");
-		var_dump($result);
-		*/
-		
 		do_action('route_construct');
 	}
 	
@@ -59,6 +21,7 @@ class Route
 		$action = 'index'; 			Registry::set('action', $action);
 		$REQUEST_URI = $_SERVER['REQUEST_URI'];
 		$REQUEST_URI = (mb_substr_count( $_SERVER['REQUEST_URI'], '?') > 0) ? substr($REQUEST_URI, 0, strpos($REQUEST_URI,'?')) : $REQUEST_URI;
+		if(substr($REQUEST_URI,-1)=='/')$REQUEST_URI=substr($REQUEST_URI, 0,-1);
 		$REQUEST_URI = apply_filters('the_uri',$REQUEST_URI);
 		if( mb_substr_count( $_SERVER['REQUEST_URI'], '?') == 1 ){
 			$get = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'],'?')+1); 
@@ -99,15 +62,13 @@ class Route
 		if(file_exists($controller_path)){
 			require_once 'application/controllers/'.$controller_file; Registry::set('page_type', 'static'); 
 			$controller_name = str_replace('-', '_', $controller_name);
-			if (class_exists($controller_name))
-			{
+			if (class_exists($controller_name)){
 				// создаем контроллер
-				$controller_obj = new $controller_name($this->registry);
+				$controller_obj = new $controller_name();
 				$controller_obj->domain = $domain;
 				$controller_obj->url = 'http://' . $controller_obj->domain;
 				$action = $action_name; 
-				if(method_exists($controller_name, $action_name))
-				{
+				if(method_exists($controller_name, $action_name)){
 					// вызываем действие контроллера
 					//$controller_obj->$action();
 					call_user_func_array(array($controller_obj, $action), $params);
@@ -125,7 +86,15 @@ class Route
 		}		
 		// Если файл контроллера отсутствует подключаем файл контроллера динамических страниц, который отвечает за поиск диначеской страници в БД
 		else{
-			Route::ErrorPage404(); 
+			if(!empty($REQUEST_URI)){
+			$model_posts = new model_posts();
+			$result = $model_posts->getItemWhere("`post_url`='{$REQUEST_URI}'");
+			if(!empty($result)){
+				$controller_index = new controller_index();
+				$controller_index->renderPage($result);
+			}
+			else Route::ErrorPage404(); 
+			} else Route::ErrorPage404(); 
 		}
 	}
 	

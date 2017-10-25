@@ -1,4 +1,16 @@
 <?php
+spl_autoload_register(function ($class) {
+	if(substr($class,0,10)=='controller'){
+	if(file_exists(APPDIR .'/application/controllers/' . $class . '.php')){
+		include  APPDIR .'/application/controllers/' . $class . '.php';
+	}
+	else {
+		Route::ErrorPage404(); 
+		exit;
+	}
+	}
+});
+
 class Controller {
 	
 	public $view = null;

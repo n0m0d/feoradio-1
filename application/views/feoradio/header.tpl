@@ -37,8 +37,8 @@
 				<nav class="main-menu hidden-xs">
 					<ul>
 						<li class="<?=$this->data['menu']['index']?>"><a href="/"><span class="icon-home"></span></a></li>
-						<li><a href="onas.html">О нас</a></li>
-						<li><a href="vedushie.html">Ведущие</a></li>
+						<li class="<?=(strpos(Registry::get('REQUEST_URI'), "onas.html")?"active":"")?>"><a href="onas.html">О нас</a></li>
+						<li class="<?=(strpos(Registry::get('REQUEST_URI'), "vedushie.html")?"active":"")?>"><a href="vedushie.html">Ведущие</a></li>
 						<li><a href="novosti.html">Новости</a></li>
 						<li><a href="arhiv.html">Архив</a></li>
 						<li><a href="vizitki.html">Визитки программ</a></li>
