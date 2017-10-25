@@ -1,0 +1,32 @@
+RewriteEngine On
+
+
+
+redirect /viber https://invite.viber.com/?g=Qgl0-iTTZ0YMQLfi0ZPnOvJaYdDoSxIS
+
+RewriteCond %{HTTP_HOST} ^b.feo.ua
+RewriteRule (.*) http://нб.фео.рф/$1 [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^brand.feo.ua
+RewriteRule (.*) http://нб.фео.рф/$1 [R=301,L]
+
+
+RewriteCond %{HTTP_HOST} ^brend.feo.ua
+RewriteRule (.*) http://нб.фео.рф/$1 [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^www.b.feo.ua
+RewriteRule (.*) http://нб.фео.рф/$1 [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^www.brand.feo.ua
+RewriteRule (.*) http://нб.фео.рф/$1 [R=301,L]
+
+
+RewriteCond %{HTTP_HOST} ^www.brend.feo.ua
+RewriteRule (.*) http://нб.фео.рф/$1 [R=301,L]
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule .* index.php [L]
+
+

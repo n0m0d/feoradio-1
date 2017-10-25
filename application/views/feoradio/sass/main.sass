@@ -1,0 +1,1140 @@
+@import "bourbon"
+@import "fonts"
+@import "libs"
+@import "vars"
+
+*::-webkit-input-placeholder
+	color: #0a0a0a
+	opacity: 1
+
+*:-moz-placeholder
+	color: #0a0a0a
+	opacity: 1
+
+*::-moz-placeholder
+	color: #0a0a0a
+	opacity: 1
+
+*:-ms-input-placeholder
+	color: #0a0a0a
+	opacity: 1
+
+.form-search > .search-wrap > input::-webkit-input-placeholder
+	color: #bababa
+	opacity: 1
+
+.form-search > .search-wrap > input:-moz-placeholder
+	color: #bababa
+	opacity: 1
+
+.form-search > .search-wrap > input::-moz-placeholder
+	color: #bababa
+	opacity: 1
+
+.form-search > .search-wrap > input:-ms-input-placeholder
+	color: #bababa
+	opacity: 1
+
+.cat-select > .selectize-control > .selectize-input > input::-webkit-input-placeholder
+	color: #bababa
+	opacity: 1
+
+.cat-select > .selectize-control > .selectize-input > input:-moz-placeholder
+	color: #bababa
+	opacity: 1
+
+.cat-select > .selectize-control > .selectize-input > input::-moz-placeholder
+	color: #bababa
+	opacity: 1
+
+.cat-select > .selectize-control > .selectize-input > input:-ms-input-placeholder
+	color: #bababa
+	opacity: 1
+
+body input:focus:required:invalid,
+body textarea:focus:required:invalid
+	color: #666
+body input:required:valid,
+body textarea:required:valid
+	color: #666
+
+body
+	font-size: 16px
+	min-width: 320px
+	position: relative
+	line-height: 1.75
+	font-family: $default-font
+	overflow-x: hidden
+	background-image: url("../img/body-background.jpg")
+	background-repeat: no-repeat
+	background-position: top
+	background-color: #fff
+	background-attachment: fixed
+
+h1
+	font-weight: 30px
+	text-align: center
+	color: #444444
+	padding: 50px 15px
+	margin: 0
+
+h2
+	font-size: 22px
+	line-height: 22px
+	font-weight: bold
+	color: #444444
+	margin: 0
+	margin-bottom: 25px
+
+h3
+	margin-top: 0
+	line-height: 16px
+	font-size: 16px
+	a
+		color: $blue
+		font-weight: bold
+		&:hover
+			text-decoration: none
+
+/* Основной плеер */
+
+.main-player
+	position: relative
+	height: 58px
+	&-playpause
+		background-repeat: no-repeat
+		width: 58px
+		height: 58px
+		cursor: pointer
+		position: absolute
+		top: 0
+		left: 0
+		a
+			font-size: 0
+	.main-player-time-duration
+		display: none
+	.main-player-time-current
+		color: #fff
+		font-size: 12px
+		line-height: 12px
+		position: absolute
+		left: 350px
+		top: calc(50% - 6px)
+	&-bar
+		width: 260px
+		height: 2px
+		display: inline-block
+		background-color: rgba(255,255,255, .5)
+		cursor: pointer
+		position: absolute
+		left: 78px
+		top: calc(50% - 1px)
+		&-played
+			height: 2px
+			background-color: #FFF
+		&-handler
+			width: 8px
+			height: 8px
+			background-color: #FFF
+			border-radius: .5em
+			position: absolute
+			top: calc(50% - 4px)
+	&-volume
+		cursor: pointer
+		&-button
+			position: absolute
+			left: 390px
+			top: calc(50% - 7px)
+			width: 16px
+			height: 14px
+			background-image: url("/img/sound-on.png")
+			a
+				font-size: 0
+		.off
+			background-image: url("/img/sound-off.png")
+			height: 16px
+			top: calc(50% - 8px)
+		&-adjust
+			position: absolute
+			left: 416px
+			top: calc(50% - 1px)
+			width: 40px
+			height: 2px
+			background-color: rgba(255,255,255, .5)
+			div
+				height: 2px
+				background-color: rgba(255,255,255, .5)
+				div
+					height: 2px
+					background-color: #fff
+				.volumeHandler
+					width: 8px
+					height: 8px
+					background-color: #FFF
+					border-radius: .5em
+					position: absolute
+					top: calc(50% - 4px)
+
+.main-player-stopped
+	.main-player-playpause
+		background-image: url("/img/play.png")
+.main-player-playing
+	.main-player-playpause
+		background-image: url("/img/pause.png")
+
+.main-player-big-volume-button
+	background-color: $blue
+	width: 65px
+	height: 65px
+	border-radius: 5em
+	position: fixed
+	z-index: 999
+	bottom: 50px
+	right: 50px
+	text-align: center
+	cursor: pointer
+	span
+		font-size: 28px
+		line-height: 65px
+		color: #fff
+		.on
+			display: inline-block
+		.off
+			display: none
+	.off
+		.on
+			display: none
+		.off
+			display: inline-block
+
+/* Мини плеер */
+
+.mini-radio-wrap
+	padding: 15px 0px
+	.current-sont
+		font-size: 13px
+		color: #444444
+
+.page-mini-radio
+	border-bottom: 1px solid #e8e8e8
+	padding-left: 30px
+	padding-right: 30px
+	background-color: #FFF
+	.current-sont
+		font-size: 13px
+		color: #444444
+.margins
+	margin-left: -15px
+	margin-right: -15px
+
+.mini-player
+	position: relative
+	height: 30px
+	background-color: #e8e8e8
+	max-width: 350px
+	&-playpause
+		background-repeat: no-repeat
+		width: 58px
+		height: 58px
+		cursor: pointer
+		position: absolute
+		top: 0
+		left: 0
+		a
+			font-size: 0
+	.mini-player-time-duration
+		display: none
+	.mini-player-time-current
+		color: #444444
+		font-size: 12px
+		font-size: 12px
+		line-height: 12px
+		position: absolute
+		right: 0
+		top: -18px
+	&-bar
+		width: 215px
+		height: 2px
+		display: inline-block
+		background-color: #bebebe
+		cursor: pointer
+		position: absolute
+		left: 45px
+		top: calc(50% - 1px)
+		&-played
+			height: 2px
+			background-color: #444444
+		&-handler
+			width: 8px
+			height: 8px
+			background-color: #444444
+			border-radius: .5em
+			position: absolute
+			top: calc(50% - 4px)
+	&-volume
+		cursor: pointer
+		&-button
+			position: absolute
+			right: 65px
+			top: calc(50% - 7px)
+			width: 16px
+			height: 14px
+			background-image: url("/img/sound-on-black.png")
+			a
+				font-size: 0
+		.off
+			background-image: url("/img/sound-off-black.png")
+			height: 16px
+			top: calc(50% - 8px)
+		&-adjust
+			position: absolute
+			right: 15px
+			top: calc(50% - 1px)
+			width: 40px
+			height: 2px
+			background-color: #bebebe
+			div
+				height: 2px
+				background-color: #bebebe
+				div
+					height: 2px
+					background-color: #444444
+				.volumeHandler
+					width: 8px
+					height: 8px
+					background-color: #444444
+					border-radius: .5em
+					position: absolute
+					top: calc(50% - 4px)
+
+.mini-player-stopped
+	.mini-player-playpause
+		width: 30px
+		height: 30px
+		background-color: #bebebe
+		a
+			width: 10px
+			height: 10px
+			border-style: solid
+			border-width: 7px 0 7px 10px
+			border-color: transparent transparent transparent #fff
+			display: block
+			margin: auto
+			margin-top: 7px
+
+.mini-player-playing
+	.mini-player-playpause
+		width: 30px
+		height: 30px
+		background-color: #bebebe
+		a
+			display: block
+			width: 10px
+			height: 10px
+			border-style: solid
+			border-width: 10px
+			border-style: double
+			border-width: 0px 0px 0px 10px
+			border-color: #fff
+			margin: auto
+			margin-top: 10px
+
+.mini-player-big-volume-button
+	display: none
+
+.no-margins
+	margin: 0
+
+.img-responsive
+	display: block
+	max-width: 100%
+	height: auto
+
+/* Мобильное меню */
+
+.toggle-menu
+	display: inline-block
+	width: 28px
+	height: 15px
+	margin: 17px 15px 8px
+	float: right
+
+.toggle-menu span:after,
+.toggle-menu span:before
+	content: ""
+	position: absolute
+	left: 0
+	top: -9px
+
+.toggle-menu span:after
+	top: 9px
+
+.toggle-menu span
+	position: relative
+	display: block
+
+.toggle-menu span,
+.toggle-menu span:after,
+.toggle-menu span:before
+	width: 100%
+	height: 5px
+	background-color: #fff
+	transition: all 0.3s
+	backface-visibility: hidden
+	border-radius: 2px
+
+.toggle-menu.on span
+	background-color: transparent
+
+.toggle-menu.on span:before
+	transform: rotate(45deg) translate(5px, 5px)
+
+.toggle-menu.on span:after
+	transform: rotate(-45deg) translate(7px, -8px)
+
+.toggle-menu.on + #menu
+	opacity: 1
+	visibility: visible
+
+.main-header
+	margin-top: 280px
+	.main-menu
+		background-color: $blue
+		display: table
+		width: 100%
+		ul
+			margin: 0
+			padding: 0
+			list-style-type: none
+			font-size: 0
+			display: table-row
+			li
+				display: table-cell
+				transition: all .25s ease
+				text-align: center
+				position: relative
+				a
+					text-decoration: none
+					color: #fff
+					font-size: 14px
+					line-height: 40px
+					display: block
+					padding: 0 17px
+					.icon-home
+						font-size: 18px
+				&:hover
+					background-color: #FFF
+					a
+						color: $blue
+			.has-drop
+				a
+					.icon-arrow-down
+						font-size: 12px
+						margin-left: 5px
+						vertical-align: middle
+				ul
+					display: none
+					position: absolute
+					top: 40px
+					right: 0
+					z-index: 999
+					background-color: #FFF
+					min-width: 200px
+					border: 1px solid #ddd
+					box-shadow: 0 1px 5px 0 #ddd
+					border-top: none
+					li
+						display: block
+						text-align: left
+						&:hover
+							background-color: #ccc
+				&:hover
+					ul
+						display: block
+			.active
+				background-color: #FFF
+				a
+					color: $blue
+	.top-sect
+		background-color: #fff
+		padding: 30px 30px
+		.logo-wrap
+			a
+				display: block
+		.city-select
+			font-size: 13px
+			color: #bababa
+			.city-filter
+				.selectize-input
+					background-color: transparent
+					outline: none
+					font-size: 16px
+					color: #2f4d81
+					padding: 0
+					min-height: 28px
+					max-width: 130px
+					&:after
+						top: 50%
+						right: 10px
+						border-color: $red transparent transparent transparent
+					.item
+						line-height: 28px
+						text-indent: 5px
+				.focus
+					box-shadow: none
+		.social-wrap
+			text-align: right
+			.social-descr
+				font-size: 0
+				display: inline-block
+				vertical-align: middle
+				//margin-top: 10px
+				margin-right: 10px
+				span
+					line-height: 17px
+					font-size: 12px
+					color: #9e9e9e
+					display: inline-block
+			.social-items
+				font-size: 0
+				display: inline-block
+				vertical-align: middle
+				//margin-top: 10px
+				a
+					width: 33px
+					height: 33px
+					display: inline-block
+					border-radius: 100%
+					margin: 0 5px
+					text-align: center
+					i
+						font-size: 22px
+						line-height: 33px
+						color: #fff
+				.fb
+					background-color: #3d589d
+				.vk
+					background-color: #3f6691
+				.od
+					background-color: #f58220
+		.phone
+			font-size: 22px
+			line-height: 22px
+			color: #444444
+			font-weight: bold
+			text-align: right
+			//margin-top: 5px
+		.phone-descr
+			text-align: right
+			color: $red
+			font-size: 14px
+
+	.main-mobile-menu
+		background-color: $blue
+		.phone
+			color: #fff
+			font-size: 20px
+			font-weight: bold
+			line-height: 40px
+			padding: 0 15px
+			display: inline-block
+		.toggle-mobile-menu
+			display: none
+			background-color: #F8F8F8
+			padding: 0
+			margin: 0
+			width: 100%
+			border: 1px solid #ddd
+			box-shadow: 0 1px 5px 0 #ddd
+			border-top: none
+			li
+				list-style-type: none
+				padding: 0 10px
+				display: block
+				a
+					text-decoration: none
+					color: #646464
+					font-size: 16px
+					display: block
+					line-height: 36px
+					&:hover
+						color: $blue
+				&:hover
+					background-color: #FFF
+					&:before
+						border-top-color: $blue
+
+.section-top
+	.section-wrap
+		background-color: #fff
+		.player-wrap
+			background-color: #000
+			height: 110px
+			background-image: url("/img/player-bg.jpg")
+			background-size: cover
+			background-position: center center
+			background-repeat: no-repeat
+			padding: 25px 30px
+			position: relative
+			margin-left: -15px
+			.current-sont
+				color: #fff
+				font-size: 16px
+				position: absolute
+				top: 20px
+				left: 105px
+			.next-song
+				color: #a6a7a6
+				font-size: 12px
+				position: absolute
+				bottom: 25px
+				left: 105px
+		.news-string
+			font-size: 14px
+			line-height: 38px
+			border-bottom: 1px solid #e8e8e8
+			color: #444444
+			padding: 0 15px
+			span
+				color: #b0b0b0
+		.camera-wrap
+			padding: 30px 0 0 15px
+			img
+				width: 100% /* Временно! Убрать! */
+			.camera-title
+				p
+					padding-top: 10px
+					padding-bottom: 20px
+					font-size: 16px
+					line-height: 16px
+					font-weight: bold
+					color: #444444
+					margin: 0
+					display: inline-block
+					margin-right: 10px
+				span
+					font-weight: normal
+					font-size: 12px
+					color: #b0b0b0
+		.play-list
+			padding-right: 15px
+			padding-bottom: 50px
+			.songs
+				.song
+					font-size: 14px
+					line-height: 30px
+					color: #b0b0b0
+					white-space: nowrap
+					overflow: hidden
+					span
+						font-weight: bold
+						color: $blue
+				.listen
+					span
+						color: #b0b0b0
+				.current
+					background-color: $blue
+					color: #fff
+					padding: 0 10px
+					.play-icon
+						font-size: 12px
+						margin-right: 5px
+					span
+						color: #fff
+
+.section-middle
+	.form-question
+		background-color: $red
+		padding: 30px 30px
+		.single-label
+			label
+				width: 100%
+				margin: 0
+				padding: 0
+				input
+					border: 0
+					outline: 0
+					width: 100%
+					line-height: 38px
+					text-indent: 10px
+					font-weight: normal
+					font-size: 15px
+					color: #0a0a0a
+					border-radius: .25em
+		.button-wrap
+			text-align: right
+			.button
+				background-color: #ffd800
+				border: 0
+				outline: 0
+				color: #0a0a0a
+				border-radius: .25em
+				font-size: 15px
+				line-height: 40px
+				padding: 0 25px
+				box-shadow: 0 1px 2px 0 #000
+				transition: all .25s ease
+				&:hover
+					opacity: .9
+
+.section-bottom
+	.section-wrap
+		background-color: #fff
+		padding: 30px 30px
+		.news-wrapper
+			h2
+				margin-bottom: 20px
+			.news
+				margin-bottom: 30px
+				p
+					margin: 0
+					padding: 0
+					font-size: 14px
+					color: #b0b0b0
+					line-height: 19px
+				.news-time
+					font-size: 12px
+					color: #b0b0b0
+					.icon-time
+						margin-right: 5px
+						font-size: 16px
+			.button-wrap
+				margin-bottom: 30px
+				.button
+					color: $blue
+					font-size: 14px
+					text-decoration: underline
+		.progs-wrapper
+			h2
+				margin-bottom: 20px
+			.prog
+				margin-bottom: 20px
+				.top-sect
+					height: 25px
+					.title
+						color: $blue
+						font-size: 14px
+						line-height: 25px
+						float: left
+				.content-sect
+					height: 30px
+					width: 100%
+		.rekl-wrap
+			margin-bottom: 30px
+
+
+.main-footer
+	background-color: #e8e8e8
+	padding: 30px 0
+	.logo-wrap-radio, .logo-wrap-media
+		display: inline-block
+		opacity: .5
+		transition: all .25s ease
+		a
+			display: block
+		&:hover
+			opacity: 1
+	.logo-wrap-media
+		float: right
+	.copy
+		font-size: 12px
+		font-weight: 200
+		color: #9e9e9e
+	.social-wrap
+		text-align: right
+		.social-items
+			font-size: 0
+			display: inline-block
+			//margin-top: 10px
+			a
+				width: 33px
+				height: 33px
+				display: inline-block
+				border-radius: 100%
+				margin: 0 5px
+				text-align: center
+				background-color: #343434
+				opacity: .5
+				transition: all .25s ease
+				i
+					font-size: 22px
+					line-height: 33px
+					color: #fff
+				&:hover
+					opacity: 1
+	.phone
+		font-size: 22px
+		line-height: 22px
+		font-weight: bold
+		color: #444444
+		text-align: right
+	.phone-descr
+		text-align: right
+		font-size: 14px
+		color: #9e9e9e
+
+/********** О нас **********/
+
+.section-onas
+	.section-wrap
+		background-color: #fff
+		.img-wrap
+			max-width: 100%
+			max-height: 315px
+			overflow: hidden
+		.about-text
+			font-weight: 200
+			color: #444444
+			font-size: 14px
+			padding: 30px 30px
+			margin: 0
+
+/********** Ведущие **********/
+
+.section-vedushie
+	.section-wrap
+		background-color: #FFF
+		padding: 0 30px 30px 30px
+		.item
+			margin-bottom: 40px
+			.ava-wrap
+				width: 185px
+				height: 185px
+				overflow: hidden
+				border-radius: 10em
+				margin: auto
+				img
+					max-width: 185px
+					//height: auto
+					height: 100% /* Временно убрать! */
+			.name
+				margin: 0
+				font-size: 16px
+				font-weight: bold
+				color: #444444
+				text-align: center
+				line-height: 45px
+			.descr
+				margin: 0
+				font-size: 14px
+				line-height: 19px
+				color: #a3a2a2
+				text-align: center
+				max-width: 180px
+				margin: auto
+
+/********** Архив и Новости **********/
+
+.section-arhiv
+	.section-wrap
+		background-color: #FFF
+		padding: 0 30px 30px 30px
+		.form-search
+			position: relative
+			margin-bottom: 15px
+			.search-wrap
+				input
+					border: 1px solid #d3d3d3
+					outline: 0
+					text-indent: 10px
+					width: 100%
+					font-size: 14px
+					font-weight: 200
+					line-height: 30.5px
+					border-radius: .15em
+				a
+					display: block
+					width: 34.5px
+					height: 34.5px
+					position: absolute
+					right: 0
+					top: 0
+					background-color: $red
+					text-align: center
+					border-radius: .15em
+					i
+						color: #fff
+						line-height: 34.5px
+		.cat-select
+			margin-bottom: 30px
+			.selectize-control
+				height: 34.5px
+				.selectize-input
+					border: 1px solid #d3d3d3
+					width: 100%
+					border-radius: .15em
+					input
+						color: #bababa
+						font-size: 14px
+						font-weight: 200
+					&:after
+						top: 50%
+						right: 10px
+						border-color: $blue transparent transparent transparent
+		.audio-wrapper
+			h2
+				margin-bottom: 20px
+			.audio
+				margin-bottom: 20px
+				.top-sect
+					height: 14px
+					.title
+						color: $blue
+						font-size: 14px
+						line-height: 14px
+						float: left
+				.time-wrap
+					font-size: 12px
+					color: #b0b0b0
+					line-height: 12px
+					.icon-time
+						margin-right: 5px
+						font-size: 16px
+						line-height: 16px
+				.content-sect
+					height: 30px
+					width: 100%
+					.mini-player
+						max-width: 350px
+						.mini-player-time-current
+							top: -38px
+						&-bar
+							width: 145px
+
+/********** Визитки программ **********/
+
+.section-vizitki
+	.section-wrap
+		background-color: #FFF
+		padding: 0 30px 30px 30px
+		.item-wrap
+			margin-bottom: 30px
+			.item
+				.top-sect
+					.img-wrap
+						width: 50px
+						height: 50px
+						overflow: hidden
+						border-radius: 5em
+						display: inline-block
+						img
+							width: 100%
+							height: 100% /* Убрать */
+							//height: auto
+					.title
+						color: #444444
+						font-weight: bold
+						font-size: 14px
+						display: inline-block
+						vertical-align: top
+						margin: 0 0 0 15px
+						max-width: 170px
+						overflow: hidden
+						line-height: 19px
+				.content-sect
+					height: 30px
+					width: 100%
+					.mini-player
+						max-width: 350px
+						.mini-player-time-current
+							top: -38px
+						&-bar
+							width: 145px
+				.bottom-sect
+					color: #9e9e9e
+					font-size: 13px
+					line-height: 18px
+					margin-top: 5px
+
+/********** Сетка вещания **********/
+
+.section-setka, .section-prais
+	.section-wrap
+		background-color: #FFF
+		padding: 0 30px 30px 30px
+		.item-wrap
+			text-align: center
+			margin-bottom: 30px
+			.item
+				padding: 0
+				margin: 0
+				display: inline-block
+				font-size: 0
+				border-bottom: 1px solid #e8e8e8
+				li
+					display: inline-block
+					font-size: 14px
+					color: #444444
+					padding: 0 15px
+					line-height: 30px
+					cursor: pointer
+				.active
+					border-bottom: 2px solid $red
+		.prog-list
+			padding: 0
+			margin: 0
+			list-style-type: none
+			margin-bottom: 30px
+			li
+				font-size: 14px
+				color: #444444
+				b
+					margin-right: 15px
+
+/********** Прайс **********/
+
+.section-setka, .section-prais
+	.section-wrap
+		.prise-table
+			width: 100%
+			border-collapse: collapse
+			margin-bottom: 30px
+			tr
+				text-align: center
+				font-size: 14px
+				line-height: 19px
+				&:nth-child(2n+2)
+					background-color: #e8e8e8
+				td
+					padding: 10px 0
+		.descr-t
+			font-size: 12px
+			line-height: 17px
+			color: #959595
+			margin: 0
+			padding: 0
+			margin-top: 35px
+			margin-bottom: 30px
+			margin-left: 15px
+			li
+				margin-bottom: 5px
+				&:last-child
+					margin: 0
+		.inner-text
+			font-size: 14px
+			color: #444444
+			line-height: 19px
+			margin: 0
+			margin-bottom: 30px
+
+
+/********** Видео галерея **********/
+
+.section-galereya
+	.section-wrap
+		background-color: #FFF
+		padding: 0 30px 30px 30px
+		.video-wrap
+			padding-bottom: 40px
+			a
+				display: block
+				text-decoration: none
+				.img-wrap
+					width: 100%
+					max-height: 150px
+					overflow: hidden
+					position: relative
+					margin-bottom: 15px
+					img
+						width: 100%
+						height: auto
+					.play-icon
+						background-image: url("/img/play-icon.png")
+						width: 42px
+						height: 42px
+						display: block
+						position: absolute
+						top: calc(50% - 21px)
+						left: calc(50% - 21px)
+						z-index: 2
+					.bgc
+						position: absolute
+						width: 100%
+						height: 100%
+						top: 0
+						left: 0
+						background-color: rgba(0,0,0, .5)
+				.title
+					color: #444444
+					font-size: 14px
+					font-weight: bold
+					line-height: 19px
+					margin: 0
+
+/********** Контакты **********/
+
+.section-contacti
+	.section-wrap
+		background-color: #FFF
+		.item-wrap
+			padding: 0 30px 50px 30px
+			.item
+				display: block
+				width: 320px
+				margin: auto
+				.left-side
+					padding-right: 10px
+					display: inline-block
+					vertical-align: middle
+					.icon-1
+						background-image: url("/img/icon-1.png")
+						width: 18px
+						height: 25px
+						display: block
+					.icon-2
+						background-image: url("/img/icon-2.png")
+						width: 24px
+						height: 24px
+						display: block
+					.icon-3
+						background-image: url("/img/icon-3.png")
+						width: 24px
+						height: 17px
+						display: block
+					.icon-4
+						background-image: url("/img/icon-4.png")
+						width: 36px
+						height: 36px
+						display: block
+				.right-side
+					display: inline-block
+					vertical-align: middle
+					span
+						display: inline-block
+						font-size: 16px
+						line-height: 21px
+						color: #000
+						b
+							font-weight: bold
+							font-size: 20px
+							padding-right: 5px
+						span
+							font-size: 14px
+							color: #bebebe
+		.social-items
+			display: block
+			text-align: center
+			padding: 0 50px 50px 50px
+			a
+				width: 33px
+				height: 33px
+				display: inline-block
+				border-radius: 100%
+				margin: 0 5px
+				text-align: center
+				i
+					font-size: 22px
+					line-height: 33px
+					color: #fff
+			.fb
+				background-color: #3d589d
+			.vk
+				background-color: #3f6691
+			.od
+				background-color: #f58220
+		.google-map
+			width: 100%
+			max-height: 350px
+			overflow: hidden
+
+@import "media" // Всегда в конце
