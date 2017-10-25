@@ -2,33 +2,33 @@
 /* Automatic model generated
  * ver 0.1
  * model for site: mvc.test
- * date create: 2017-10-20 22:28:56
+ * date create: 2017-10-25 14:45:35
 */
-class model_attributes extends Model
+class model_users extends Model
 {
-	function __construct($config) {
+	function __construct($config = null) {
 		$config = [
-            "database" => "mvc",
-            "prefix" => "mvc_",
-            "name" => "attributes",
+            "database" => "feoradio",
+            "prefix" => "radio_",
+            "name" => "users",
             "engine" => "MyISAM",
             "version" => "1",
             "row_format" => "Dynamic",
-            "create_time" => "2017-10-20 21:26:30",
+            "create_time" => "2017-10-25 13:43:29",
             "collation" => "utf8_general_ci",
-            "primary_key" => "at_id",
+            "primary_key" => "user_id",
 			"autoinit"  => false,
             "columns" => array(
-				'at_name' => "varchar(200) NOT NULL",				'at_type' => "varchar(50) NOT NULL DEFAULT 'text'",				'at_key' => "varchar(250) NOT NULL",				'at_defval' => "varchar(250) NULL",				'at_comment' => "varchar(250) NULL",				
+				'user_login' => "varchar(50) NOT NULL",				'user_password' => "varchar(50) NOT NULL",				'user_name' => "varchar(100) NOT NULL",				'user_avatar' => "varchar(100) NULL DEFAULT '/images/defaultAvatar.jpg'",				'user_status' => "int(10) NOT NULL",				'user_activation_key' => "varchar(50) NOT NULL",				'user_registered' => "datetime NOT NULL",				
 				),
 			"index" => array(
-				'at_type' => array( 'at_type' ),				
+				
 			),
 			"unique" => array(
-				'at_name' => array( 'at_name' ),				
+				
 			),
 			"fulltext" => array(
-				'at_defval' => array( 'at_defval' ),				
+				
 			),
 			"revisions" => array(
 				array(
@@ -78,5 +78,22 @@ class model_attributes extends Model
 		];
 		parent::__construct($config);
     }
+	
+	public function login($login, $password){
+		$result = $this->getItemWhere("`user_login`='{$login}' and `user_password`='".md5($password)."' and user_status=1");
+		if(!empty($result)){
+			$_SESSION['user_id']			=	$result['user_id'];
+			$_SESSION['user_login']			=	$result['user_login'];
+			$_SESSION['user_name']			=	$result['user_name'];
+			$_SESSION['user_avatar']		=	$result['user_avatar'];
+			$_SESSION['user_status']		=	$result['user_status'];
+			$_SESSION['user_activation_key']=	$result['user_activation_key'];
+			$_SESSION['user_registered']	=	$result['user_registered'];
+			return $result;
+		}
+		else {
+			return false;
+		}
+	}
 }
 ?>

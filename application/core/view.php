@@ -33,11 +33,8 @@ class View
 		
 	}
 	
-	public function setView($file='', $fullpath=false){
-		$src = ($fullpath?$file:$this->_template_folder.$file);
-		if(file_exists($src) and is_file($src)){
-			$this->_view = $file;
-		}
+	public function setView($file=''){
+		$this->_view = $file;
 	}
 	
 	public function setTemplatesFolder($src=''){
@@ -124,6 +121,7 @@ class View
     }
 	
     public function renderBody() {
+		//echo $this->_template_folder.$this->_view;
 		if (!file_exists($this->_template_folder.$this->_view)){
             die("View not found :{$this->_template_folder}{$this->_view}");
         }

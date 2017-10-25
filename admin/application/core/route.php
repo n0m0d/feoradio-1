@@ -8,7 +8,26 @@ class Route
 {
 	
 	function __construct(){
-
+		$this->session_run();
+		
+		if(isset($_POST['login']) and isset($_POST['password'])){
+			$model_users = new model_users();
+			$user = $model_users->login($_POST['login'], $_POST['password']);
+			if($user){
+				header('Location: '.$_SERVER['REQUEST_URI']);
+			}
+		}
+		$model_access = new model_access();
+		$adminAccess = $model_access->getPermission('admin');
+		if(empty($_SESSION['user_id']) or !$adminAccess){
+			$view = new View('login.tpl');
+			$view->setTemplatesFolder(ADMINDIR.'/application/views/');
+			$view->headers['title'] = 'Авторизация | Администрирование Полезного радио';
+			$view->renderBody();
+			exit;
+		}
+		
+		
 	}
 
 	

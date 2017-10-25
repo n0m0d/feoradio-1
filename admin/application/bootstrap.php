@@ -6,5 +6,5 @@ include_once ADMINDIR .'/application/load.php'; // маршрутизатор
 getPlugins(); // подключаем плагины
 
 $route = new Route(); // создаем маршрутизатор
-$route->session_run(); // запуск сессии пользователя
+//$route->session_run(); // запуск сессии пользователя
 $route->start(); // запускаем маршрутизатор
