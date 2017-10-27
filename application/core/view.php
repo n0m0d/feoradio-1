@@ -11,6 +11,7 @@ class View
     protected $_footer = '';
     protected $_head_file = null;
     protected $_footer_file = null;
+    protected $_auto_render = true;
     public $_controller = null;
     public $_parent_view = null;
     
@@ -33,8 +34,23 @@ class View
 		
 	}
 	
+	public function isRender(){
+		return $this->_auto_render;
+	}
+	
+	public function notRender(){
+		$this->_auto_render = false;
+		return $this;
+	}
+	
+	public function yesRender(){
+		$this->_auto_render = true;
+		return $this;
+	}
+	
 	public function setView($file=''){
 		$this->_view = $file;
+		return $this;
 	}
 	
 	public function setTemplatesFolder($src=''){
@@ -44,6 +60,7 @@ class View
 		else {
 			die('Templates folder not found');
 		}
+		return $this;
 	}
 	
 	public function includeView($file, $fullpath=false){
@@ -56,10 +73,12 @@ class View
 	
 	public function setHeader($html=''){
 		$this->_head = $html;
+		return $this;
 	}
 	
 	public function setFooter($html=''){
 		$this->_footer = $html;
+		return $this;
 	}
 	
 	public function setHeaderView($tpl, $fullpath=false){
@@ -221,7 +240,7 @@ class Template {
         return $this->getPlain();
     }
 	
-	function __destruct(){
+	public function __toString(){
 		return $this->getDom();
 	}
 	

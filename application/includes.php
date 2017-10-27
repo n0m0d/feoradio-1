@@ -30,6 +30,7 @@ $GLOBALS['DB'] = new SafeMySQL(array(
 ///////////////////////////////////////////////////////////////////////////////////////////
 include_once APPDIR .'/application/core/functions.php'; // основные функции приложения
 include_once APPDIR ."/application/core/error.php"; // сканер ошибок
+include_once APPDIR ."/application/core/Paginator.php"; // постраничная навигация
 include_once APPDIR ."/application/core/hooks.php"; // крючки
 include_once APPDIR ."/application/core/Ecstatic.php"; // Рендер таблиц
 include_once APPDIR ."/application/core/wp-load.php"; // (WORDPRESS)

@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?=$this->headers['title']?></title>
-<meta name="keywords" content="" />
-<meta name="description" content="" />
-<meta name="robots" content="all" />
-<meta name ="revisit-after" Content="15 days">
-<meta http-equiv="content-language" content="ru" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title><?=$this->headers['title']?></title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="robots" content="all" />
+	<meta name ="revisit-after" Content="15 days">
+	<meta http-equiv="content-language" content="ru" />
 </head>
 <body>
 <div id="admin-content">
@@ -65,7 +67,6 @@ form label {
 	background-color:#bcd5ef;
 }
 </style>
-<h1>Панель администрирования</h1>
 <div class="loginBlock">
 <form action="/admin/" method="POST">
 	<div>

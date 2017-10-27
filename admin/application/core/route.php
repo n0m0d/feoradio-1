@@ -53,12 +53,17 @@ class Route
 			   }
 		}
 		
+		$host = apply_filters('the_host', 'http://'.$_SERVER["HTTP_HOST"]);
+		Registry::set('HTTP_HOST', $host);
+		Registry::set('REQUEST_URI', $REQUEST_URI);
 		
-		$routes = explode('/', $REQUEST_URI);
-		foreach ($routes as $i => $route){
-			if($route == '' or $route == 'admin') unset ($routes[$i]);
+		$_routes = explode('/', $REQUEST_URI);
+		$routes = [];
+		foreach($_routes as $route){
+			if($route != 'admin' and !empty($route))$routes[] = $route;
 		}
-		sort($routes);
+		
+		//sort($routes);
 		// Получаем имя контроллера
 		if ( !empty($routes[0]) ){	
 			$controller = $routes[0];
@@ -67,14 +72,21 @@ class Route
 		if ( !empty($routes[1]) ){
 			$action = $routes[1];
 		}
+		$subActions = [];
+		if(count($routes)>2){
+			for($i=2;$i<count($routes);$i++){
+			$subActions[]=$routes[$i];
+			}
+		}
+		/*
 		if ( !empty($routes[2]) ){
 			header("Location:{$routes[0]}/{$controller}/{$action}");
 		}
-		
+		*/
 		// Добавляем префиксы
 		$controller_name = 'controller_'.$controller;
 		$action_name = 'action_'.$action;
-		
+		$subaction_name = $action_name;
 		// Подцепляем файл с классом контроллера
 		$controller_file = strtolower($controller_name).'.php';
 		$controller_path = ADMINDIR."/application/controllers/".$controller_file; 
@@ -84,12 +96,18 @@ class Route
 			require_once ADMINDIR.'/application/controllers/'.$controller_file;
 			$controller_name = str_replace('-', '_', $controller_name);
 			if (class_exists($controller_name)){
-				// создаем контроллер
-				$controller = new $controller_name();
-				$action = $action_name; 
-				if(method_exists($controller_name, $action_name)){
+				if(!empty($subActions)){
+					$subaction_name = $action_name.'_'.implode('_',$subActions);
+				}
+				if(method_exists($controller_name, $subaction_name)){
 					// вызываем действие контроллера
-					$controller->$action();
+					$controller = new $controller_name();
+					$controller->$subaction_name($subActions);
+				}
+				elseif(method_exists($controller_name, $action_name)){
+					// вызываем действие контроллера
+					$controller = new $controller_name();
+					$controller->$action_name($subActions);
 				}
 				else{
 					Route::ErrorPage404();

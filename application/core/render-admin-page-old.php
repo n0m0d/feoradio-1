@@ -1,372 +1,5 @@
 <?php
-class AdminList {
-	private $_model, $_model_where, $_columns, $_attrs=array(), $_items=null, $_limit = 30, $_start = 0, $_page = 1, $_tablename, $_primary, $_modelcolumns, $_count;
-	
-	function __construct($options = array()){
-		if(!empty($options)){
-			$this->setOptions($options);
-		}
-	}
-	
-	public function setOptions($options = array()){
-		if(!empty($options)){
-			if(isset($options['model'])){
-				$this->_model = $options['model'];
-				$this->_tablename = $this->_model->gettablename();
-				$this->_primary = $this->_model->getprimarykey();
-				$this->_modelcolumns = $this->_model->getcolumns();
-			}
-			if(isset($options['items'])){
-				$this->_items = $options['items'];
-			}
-			if(isset($options['attrs'])){
-				$this->_attrs = $options['attrs'];
-			}
-			if(isset($options['where'])){
-				$this->_model_where = $options['where'];
-			} else $this->_model_where = "1";
-			if(isset($options['columns'])){
-				$this->_columns = $options['columns'];
-			}
-			else {
-				if($this->_model){
-					$this->_columns = [];
-					$this->_columns[] = [ "title"=>$this->_primary, "name"=>$this->_primary, "content" => create_function('$cel,$row','echo $cel;') ];
-					foreach($this->_modelcolumns as $name => $column){
-						$this->_columns[] = [ "title"=>$name, "name"=>$name, "content" => create_function('$cel,$row','echo $cel;') ];
-					}
-				}
-			}
-			if(isset($options['limit'])){
-				$this->_limit = $options['limit'];
-			}
-			if(isset($options['page'])){
-				$this->_page = $options['page'];
-			} 
-			elseif($_GET['page']) { $this->_page = $_GET['page']; }
-			$this->_start = ($this->_limit * $this->_page) - $this->_limit;
-		}
-	}
-	
-	public function setItems($items){
-		if(is_array($items)){
-			$this->_items = $items;
-		}
-	}
-	
-	public function get(){
-		$result = '';
-		$thead = ''; $tbody = '';
-		foreach($this->_columns as $col){
-			$attrs = '';
-			if(is_array($col['attrs']))foreach($col['attrs'] as $key=>$val){
-				$attrs .= $key.'="'.addslashes($val).'"';
-			}
-			$thead .= '<th '.$attrs.'>'.$col['title'].'</th>'; 
-		} 
-		$thead = '<thead><tr>'.$thead.'</tr></thead>';
-		if(is_null($this->_items)){
-			$this->_count = $this->_model->getCountWhere($this->_model_where);
-			$rows = $this->_model->getItemsWhere($this->_model_where, null, $this->_start, $this->_limit);
-		} else $rows = $this->_items;
-		foreach($rows as $row){
-			$tr = '<tr id="'.$this->_tablename.'-row-'.$row[$this->_primary].'">';
-			foreach($this->_columns as $col){ 
-				if(is_callable($col["content"])){
-					ob_start();
-						call_user_func($col['content'],$row[$col['name']], $row);
-					$cel = ob_get_clean();
-				}
-				else { $cel = $col["content"]; }
-				$tr .= '<td>'.$cel.'</td>'; 
-			}
-			$tr .= '</tr>';
-			$tbody .= $tr;
-		}
-		$tbody = '<tbody>'.$tbody.'</tbody>';
-		$attrs = '';
-		foreach($this->_attrs as $key=>$value){
-			$attrs.=$key.'="'.addslashes($value).'" ';
-		}
-		$result = '<div class="sectright-table"><table '.$attrs.'>'.$thead.$tbody.'</table></div>';
-		
-		$urlPattern = Registry::get('REQUEST_URI').'?page=(:num)';
-		$paginator = new Paginator($this->_count, $this->_limit, $this->_page, $urlPattern);
-		$paginator = $paginator->setLinkAttrs(['class'=>'ajax-load', 'data-center'=>'false']);
-		return $result.$paginator;
-	}
-	
-	public function render(){
-		echo $this->get();
-	}
-	
-	public function __toString(){
-		return $this->get();
-	}
-	
-}
-
 class AdminPage {
-	private $_model=null, $_model_where=null, $_fields=null, $_item=null, $_tablename, $_primary, $_modelcolumns, $_action;
-	
-	function __construct($options = array()){
-		if(!empty($options)){
-			$this->setOptions($options);
-		}
-	}
-	
-	public function setOptions($options = array()){
-		if(!empty($options)){
-			if(isset($options['model'])){
-				$this->_model = $options['model'];
-				$this->_tablename = $this->_model->gettablename();
-				$this->_primary = $this->_model->getprimarykey();
-				$this->_modelcolumns = $this->_model->getcolumns();
-			}
-			if(isset($options['item'])){
-				$this->_item = $options['item'];
-			} 
-			if(isset($options['where'])){
-				$this->_model_where = $options['where'];
-			} else $this->_model_where = "1";
-			if(isset($options['fields'])){
-				$this->_fields = $options['fields'];
-			}
-			else {
-				if($this->_model){
-					$this->_fields = [];
-					$this->_fields[] = [ "title"=>$this->_primary, "name"=>$this->_primary, "type"=>"text" ];
-					foreach($this->_modelcolumns as $name => $column){
-						$this->_fields[] = [ "title"=>$name, "name"=>$name, "type"=>"text" ];
-					}
-				}
-			}
-			if(isset($options['action'])){
-				$this->_action = $options['action'];
-			} else $this->_action = Registry::get('REQUEST_URI');
-		}
-	}
-	
-	public function setItem($item){
-		if(is_array($item)){
-			$this->_item = $item;
-		}
-	}
-	
-	public function get(){
-		$result = '<div class="sectright-table">
-		<form class="sectright-filters-form" action="'.$this->_action.'">';
-		if(is_array($this->_fields))foreach($this->_fields as $i => $field){
-			$result .= AdminPage::getFormObject($field, $this->_item);
-		}	
-		$result .= '</form></div>';
-		return $result;
-	
-	}
-	
-	public static function getFormObject($object, $item){
-		$content = '';
-		if(is_array($object)){
-			if(isAssoc($object)){
-				if(!empty($object['type']))
-				switch($object['type']){
-					case "hidden": { $content = AdminPage::hiddenField($object, $item[$object['name']]); break;}
-					case "text": { $content = AdminPage::textField($object, $item[$object['name']]); break;}
-					case "mediumText": { $content = AdminPage::mediumTextField($object, $item[$object['name']]); break;}
-					case "editor": { $content = AdminPage::tinyEditor($object, $item[$object['name']]); break;}
-					case "number": { $content = AdminPage::numberField($object, $item[$object['name']]); break;}
-					case "switch": { $content = AdminPage::switchField($object, $item[$object['name']]); break;}
-					case "check": { $content = AdminPage::checkField($object, $item[$object['name']]); break;}
-					
-					default:{ $content = AdminPage::textField($object, $item[$object['name']]); break;}
-				}
-			}
-			else{
-				foreach($object as $item){
-					$content.= AdminPage::getFormObject($item);
-				}
-			}
-			
-		} else $content .= $object;
-		return $content;
-	}
-	
-	public static function prepareJs($js){
-		return "\n<script type=\"text/javascript\">\ntry{\n$(function() {\n".$js."\n});\n}catch(error){\nconsole.error(error);\n}\n</script>";
-	}
-	
-	public static function prepareCss($css){
-		return "\n<style>\n".$css."\n</style>";
-	}
-	
-	public static function hiddenField($object, $value){
-		$uniq=uniqid();
-		if(!isset($object['id'])) $object['id'] = 'text-'.$uniq;
-		if(!isset($object['name'])) $object['name'] = 'text-'.$uniq;
-		if(!isset($object['class'])) $object['class'] = '';
-		if(!isset($object['value'])) $object['value'] = $value;
-		if(!isset($object['attrs'])) $object['attrs'] = [];
-		$attrs = ''; foreach($object['attrs'] as $key=>$val){ $attrs .= $key.'="'.addslashes($val).'" '; }
-		
-		return '
-		<input id="'.$object['id'].'" class="'.$object['class'].'" name="'.$object['name'].'" type="hidden" value="'.$object['value'].'" '.$attrs.'>
-		';
-	}
-	
-	public static function textField($object, $value){
-		$uniq=uniqid();
-		if(!isset($object['id'])) $object['id'] = 'text-'.$uniq;
-		if(!isset($object['title'])) $object['title'] = '';
-		if(!isset($object['name'])) $object['name'] = 'text-'.$uniq;
-		if(!isset($object['class'])) $object['class'] = '';
-		if(!isset($object['value'])) $object['value'] = $value;
-		if(!isset($object['attrs'])) $object['attrs'] = [];
-		$attrs = ''; foreach($object['attrs'] as $key=>$val){ $attrs .= $key.'="'.addslashes($val).'" '; }
-		return '
-			<div class="sectright-filters-form-label">
-				<label><span class="title">'.$object['title'].':</span>
-					<input id="'.$object['id'].'" class="filter-input '.$object['class'].'" name="'.$object['name'].'" type="text" value="'.$object['value'].'" placeholder="'.$object['title'].'" '.$attrs.'>
-				</label>
-			</div>
-		';
-	}
-	
-	public static function mediumTextField($object, $value){
-		$uniq=uniqid();
-		if(!isset($object['id'])) $object['id'] = 'text-'.$uniq;
-		if(!isset($object['title'])) $object['title'] = '';
-		if(!isset($object['name'])) $object['name'] = 'text-'.$uniq;
-		if(!isset($object['class'])) $object['class'] = '';
-		if(!isset($object['value'])) $object['value'] = $value;
-		if(!isset($object['attrs'])) $object['attrs'] = [];
-		$attrs = ''; foreach($object['attrs'] as $key=>$val){ $attrs .= $key.'="'.addslashes($val).'" '; }
-		return '
-			<div class="sectright-filters-form-label">
-				<label><span class="title">'.$object['title'].':</span>
-					<textarea id="'.$object['id'].'" class="filter-input '.$object['class'].'" name="'.$object['name'].'" placeholder="'.$object['title'].'" '.$attrs.'>'.addslashes($object['value']).'</textarea>
-				</label>
-			</div>
-		';
-	}
-	
-	public static function tinyEditor($object, $value){
-		$uniq=uniqid();
-		if(!isset($object['id'])) $object['id'] = 'text-'.$uniq;
-		if(!isset($object['title'])) $object['title'] = '';
-		if(!isset($object['name'])) $object['name'] = 'text-'.$uniq;
-		if(!isset($object['class'])) $object['class'] = '';
-		if(!isset($object['value'])) $object['value'] = $value;
-		if(!isset($object['attrs'])) $object['attrs'] = [];
-		if(!isset($object['height'])) $object['height'] = '300';
-		$attrs = ''; foreach($object['attrs'] as $key=>$val){ $attrs .= $key.'="'.addslashes($val).'" '; }
-		
-		$result.= AdminPage::prepareJs('tinymce.init({
-		selector: "#'.$object['id'].'",
-		height: "'.$object['height'].'",
-		language_url : "/admin/application/views/js/tinyMce_ru.js",
-		forced_root_block : false,
-		force_p_newlines : false,
-		force_br_newlines : true,
-		browser_spellcheck : true,
-		contextmenu: false,
-
-		cleanup_on_startup: false,
-		trim_span_elements: false,
-		verify_html: false,
-		cleanup: false,
-		convert_urls: false,
-
-		//autosave_ask_before_unload: false,
-		plugins: [
-			"advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker save",
-			"searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-			"table contextmenu directionality emoticons template textcolor paste  textcolor colorpicker textpattern codesample" //fullpage
-		],
-		toolbar1: "newdocument | save | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect", //newdocument fullpage
-		toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
-		toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft | codesample | photo",
-		
-		save_oncancelcallback: function () { console.log("Save canceled"); },
-		save_onsavecallback: function () { tinymce.triggerSave(); $("button[name=submitbtn]").click();console.log("Saved"); },
-		
-		convert_urls: false,
-		menubar: true,
-		toolbar_items_size: "small",
-
-		style_formats: [{title: "Bold text",inline: "b"}, {title: "Red text",inline: "span",styles: {color: "#ff0000"}}, {title: "Red header",block: "h1",styles: {color: "#ff0000"}}, {title: "Example 1",inline: "span",classes: "example1"}, {title: "Example 2",inline: "span",classes: "example2"}, {title: "Table styles"}, {title: "Table row 1",selector: "tr",classes: "tablerow1"}],
-		templates: [{title: "Test template 1",content: "Test 1"}, {title: "Test template 2",content: "Test 2"}],
-		content_css: ["//www.tinymce.com/css/codepen.min.css"],
-		/* setup: function (editor) { editor.on("change", function () { tinymce.triggerSave();}); } */
-	  });');
-		
-		return $result.'
-		<div class="sectright-filters-form-label">
-			<p class="title">'.$object['title'].':</p>
-			<div id="'.$object['id'].'-block"><textarea name="'.$object['name'].'" id="'.$object['id'].'" class="'.$object['class'].'">'.$object['value'].'</textarea></div>
-		</div>
-		';
-	}
-	
-	public static function numberField($object, $value){
-		$uniq=uniqid();
-		if(!isset($object['id'])) $object['id'] = 'text-'.$uniq;
-		if(!isset($object['title'])) $object['title'] = '';
-		if(!isset($object['name'])) $object['name'] = 'text-'.$uniq;
-		if(!isset($object['class'])) $object['class'] = '';
-		if(!isset($object['value'])) $object['value'] = $value;
-		if(!isset($object['attrs'])) $object['attrs'] = [];
-		$attrs = ''; foreach($object['attrs'] as $key=>$val){ $attrs .= $key.'="'.addslashes($val).'" '; }
-		return '
-			<div class="sectright-filters-form-label">
-				<label><span class="title">'.$object['title'].':</span>
-					<input id="'.$object['id'].'" class="filter-input '.$object['class'].'" name="'.$object['name'].'" type="number" value="'.$object['value'].'" placeholder="'.$object['title'].'" '.$attrs.'>
-				</label>
-			</div>
-		';
-	}
-	
-	public static function switchField($object, $value=0){
-		$uniq=uniqid();
-		if(!isset($object['id'])) $object['id'] = 'text-'.$uniq;
-		if(!isset($object['title'])) $object['title'] = '';
-		if(!isset($object['name'])) $object['name'] = 'text-'.$uniq;
-		if(!isset($object['class'])) $object['class'] = '';
-		if(!isset($object['value'])) $object['value'] = $value;
-		if(!isset($object['attrs'])) $object['attrs'] = [];
-		$attrs = ''; foreach($object['attrs'] as $key=>$val){ $attrs .= $key.'="'.addslashes($val).'" '; }
-		return '
-		<div class="sectright-filters-form-label">
-			<input id="'.$object['id'].'" class="switch '.$object['class'].'" '.($object['value']==1?'checked="checked"':'').' name="'.$object['name'].'" type="checkbox" '.$attrs.'/>
-			<label for="'.$object['id'].'">'.$object['title'].'</label>
-		</div>
-		';
-	}
-	
-	public static function checkField($object, $value=0){
-		$uniq=uniqid();
-		if(!isset($object['id'])) $object['id'] = 'text-'.$uniq;
-		if(!isset($object['title'])) $object['title'] = '';
-		if(!isset($object['name'])) $object['name'] = 'text-'.$uniq;
-		if(!isset($object['class'])) $object['class'] = '';
-		if(!isset($object['value'])) $object['value'] = $value;
-		if(!isset($object['attrs'])) $object['attrs'] = [];
-		$attrs = ''; foreach($object['attrs'] as $key=>$val){ $attrs .= $key.'="'.addslashes($val).'" '; }
-		
-		return '
-		<div class="sectright-filters-form-label">
-			<label><span class="title">'.$object['title'].':</span>
-				<input id="'.$object['id'].'" name="'.$object['name'].'" class="ch '.$object['class'].'" value="'.$object['value'].'" type="checkbox" '.(($object['value'] == 1)? "checked='checked'" : "").' title="'.$object['title'].': '.$object['value'].'" '.$attrs.'>
-			</label>
-		</div>
-		';
-	}
-	
-	public function __toString(){
-		return $this->get();
-	}
-}
-
-class AdminPage2 {
 	
 	private $model, $_attrs, $_header, $_table, $_where, $_action, $_menu, $_id, $_fields, $_column_prefix, $_column_sufix, $_structure, $_item, $_items, $_primary_key, $_primary_key_value, $_add_date, $_update_date, $_js, $_css;
 	private $_buttons, $_html_table_header, $_html_table_body, $_html_table_foorer, $_html_table_columns; 
@@ -382,13 +15,11 @@ class AdminPage2 {
 	public function setOptions($options = array()){
 		if(!empty($options)){
 			$uniq=uniqid();
-			$this->model = $options['model'];
+			$this->model = new Model();
 			$this->_attrs = $options['attrs'];
 			$this->_header = $options['header'];
 			$this->_footer = $options['footer'];
-			$this->_table = $this->model->gettablename();
-			$this->_primary_key = $this->model->getprimarykey();
-			$this->_structure = $this->model->getcolumns();
+			$this->_table = $options['table'];
 			$this->_where = $options['row'];
 			$this->_buttons = isset($options['buttons'])?$options['buttons']:array();
 			$this->_action = (!empty($options['action'])?$options['action']:$_SERVER['REQUEST_URI']);
@@ -422,7 +53,7 @@ class AdminPage2 {
 	public function setStructure($structure=array()){
 		if(empty($structure)){
 			if(!empty($this->_table)){
-			$this->_structure = $this->model->db()->GetAll("SHOW FULL FIELDS FROM ".$this->_table);
+			$this->_structure = $this->model->db->GetAll("SHOW FULL FIELDS FROM ".$this->_table);
 			foreach($this->_structure as $i=>$row){ if($row['Key']=='PRI'){ $this->_primary_key=$row['Field']; break; }}
 			}
 		}
@@ -437,7 +68,7 @@ class AdminPage2 {
 			if(!empty($this->_table)){
 				if($this->_where!='new'){
 					$query=''; foreach($this->_where as $col=>$val){ $query.=" AND `{$col}`='{$val}'"; }
-					$this->_item = $this->model->db()->GetRow("SELECT * FROM ".$this->_table." WHERE 1".$query);
+					$this->_item = $this->model->db->GetRow("SELECT * FROM ".$this->_table." WHERE 1".$query);
 					foreach($this->_item as $column=>$value){ if($column==$this->_primary_key){ $this->_primary_key_value=$value; break; }}
 				}
 				else{
@@ -457,7 +88,7 @@ class AdminPage2 {
 			if(!empty($this->_table)){
 				if($this->_where!='new' and is_array($this->_where)){
 					$query=''; foreach($this->_where as $col=>$val){ $query.=" AND `{$col}`='{$val}'"; }
-					$this->_items = $this->model->db()->GetAll("SELECT * FROM ".$this->_table." WHERE 1".$query);
+					$this->_items = $this->model->db->GetAll("SELECT * FROM ".$this->_table." WHERE 1".$query);
 					$this->_primary_key_value=array();
 					foreach($this->_items as $i=>$row){
 						foreach($row as $column=>$value){ if($column==$this->_primary_key){ $this->_primary_key_value[$i]=$value; break; }}

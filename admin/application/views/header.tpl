@@ -9,9 +9,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<meta property="og:image" content="/admin/application/views/path/to/image.jpg">
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/cupertino/jquery-ui.css">
+	
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" rel="stylesheet">
+	
+	<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+
+	
 	<script src="/admin/application/views/js/chosen.jquery.js"></script>
 	<link rel="stylesheet" type="text/css"  href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.7.0/chosen.css" />
 	
@@ -21,6 +29,10 @@
 	<link rel="apple-touch-icon" sizes="114x114" href="/admin/application/views/img/favicon/apple-touch-icon-114x114.png">
 
 	<link rel="stylesheet" href="/admin/application/views/libs/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/admin/application/views/css/nprogress.css">
+	<script src="/admin/application/views/js/nprogress.js"></script>
+	<link rel="stylesheet" href="/admin/application/views/css/footable.bootstrap.css">
+	<script src="/admin/application/views/js/footable.js"></script>
 	<link rel="stylesheet" href="/admin/application/views/css/main.min.css">
 
 	<meta name="theme-color" content="#000">
@@ -96,19 +108,19 @@
 	<section class="main-section">
 		<div class="sections">
 			<div class="sectleft">
-				<a href="<?=$GLOBALS['CONFIG']['HTTP_HOST']?>/admin/buhg/" class="sectleft-item <?=($this->data['main-menu']['Бухгалтерия']?'sectleft-active':'')?>">
+				<a href="<?=$GLOBALS['CONFIG']['HTTP_HOST']?>/admin/buhg/" class="sectleft-item ajax-load <?=($this->data['main-menu']['Бухгалтерия']?'active':'')?>">
 					<span class="sectleft-item-icon"><i class="fa fa-calculator" aria-hidden="true"></i></span>
 					<p class="sectleft-item-text">Бухгалтерия</p>
 				</a>
-				<a href="<?=$GLOBALS['CONFIG']['HTTP_HOST']?>/admin/tasks/" class="sectleft-item <?=($this->data['main-menu']['Задачи']?'sectleft-active':'')?>">
+				<a href="<?=$GLOBALS['CONFIG']['HTTP_HOST']?>/admin/tasks/" class="sectleft-item ajax-load <?=($this->data['main-menu']['Задачи']?'active':'')?>">
 					<span class="sectleft-item-icon"><i class="fa fa-list" aria-hidden="true"></i></span>
 					<p class="sectleft-item-text">Задачи</p>
 				</a>
-				<a href="<?=$GLOBALS['CONFIG']['HTTP_HOST']?>/admin/control/" class="sectleft-item <?=($this->data['main-menu']['Управление']?'sectleft-active':'')?>">
+				<a href="<?=$GLOBALS['CONFIG']['HTTP_HOST']?>/admin/control/" class="sectleft-item ajax-load <?=($this->data['main-menu']['Управление']?'active':'')?>">
 					<span class="sectleft-item-icon"><i class="fa fa-sliders" aria-hidden="true"></i></span>
 					<p class="sectleft-item-text">Управление</p>
 				</a>
-				<a href="<?=$GLOBALS['CONFIG']['HTTP_HOST']?>/admin/settings/" class="sectleft-item <?=($this->data['main-menu']['Настройки']?'sectleft-active':'')?>">
+				<a href="<?=$GLOBALS['CONFIG']['HTTP_HOST']?>/admin/settings/" class="sectleft-item ajax-load <?=($this->data['main-menu']['Настройки']?'active':'')?>">
 					<span class="sectleft-item-icon"><i class="fa fa-cog" aria-hidden="true"></i></span>
 					<p class="sectleft-item-text">Настройки</p>
 				</a>

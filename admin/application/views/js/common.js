@@ -3,19 +3,35 @@ var MD5 = function(s){function L(k,d){return(k<<d)|(k>>>(32-d))}function K(G,k){
 $(function() {
 	$(document).on("click", 'a.ajax-load', function(e){
 		e.preventDefault();
+		var $a = $(this);
 		var href = $(this).attr('href');
-		
+		NProgress.start();
 		$.ajax({
 			type : 'POST', 
 			data:{"side":"server"}, 
 			url : href,
 			success : function (result) {
-				var $sectright = $(result).find('.sectright');
-				$('.sectright').html($sectright.html());
-				var state = { 'page_id': MD5(href) };
-				var title = $(result).find('head title').text();
+				NProgress.done();
+				try {
+					$a.parent().find('a.active').removeClass('active');
+					$a.addClass('active');
+					var $sectcenter = $(result).find('.sectcenter');
+					var $sectright = $(result).find('.sectright');
+					var center = $a.data('center');
+					var left = $a.data('left');
+					if(center!==false){ $('.sectcenter').html($sectcenter.html()); }
+					$('.sectright').html($sectright.html());
+					
+					var state = { 'page_id': MD5(href) };
+					var title = $(result).filter('title').text();
+					var description = $('meta[name="description"]').attr("content");
+					$('head title').text(title);
+					$('head meta[name="description"]').attr("content", description);
+					InitChosen($('.filter-select'));
+					main();
+				} catch(e) { console.error(e); }
 				history.pushState(state, title, href);
-				InitChosen($('.filter-select'));
+				
 			}
 			
 		});
@@ -23,7 +39,7 @@ $(function() {
 		
 	});
 
-	$('.dropdown-button').on("click", function(e) {
+	$(document).on("click", '.dropdown-button', function(e) {
 		e.preventDefault();
 		$(this).toggleClass('changed');
 		var id = $(this).attr("id");
@@ -31,7 +47,7 @@ $(function() {
 		
 	});
 
-	$('.indropdown-button').on("click", function() {
+	$(document).on("click", '.indropdown-button', function() {
 		$(this).toggleClass('changed');
 		var id = $(this).attr("id");
 		$(".indropdown-list-" + id).slideToggle('fast');
@@ -42,8 +58,9 @@ $(function() {
 		$o.each(function(i, element){
 			var $element = $(element);
 			var value = $element.val();
+			
 			var CHOSEN_OPTIONS = {
-					width: "300px",
+					width: ($(window).width()<768?"100%":"300px"),
 					no_results_text: "Не найдено ",
 					placeholder_text: "",
 					disable_search: true,
@@ -77,11 +94,12 @@ $(function() {
 	
 	InitChosen($('.filter-select'));
 
-	$('#maincheck').on("click", function() {
-		if($('#maincheck').prop('checked')) {
-			$('.mc').prop('checked', true);
+	$(document).on("click", '.check-all', function() {
+		var name = $(this).data('name');
+		if($(this).prop('checked')) {
+			$('input[type=checkbox][name="'+name+'"]').prop('checked', true);
 		} else {
-			$('.mc').prop('checked', false);
+			$('input[type=checkbox][name="'+name+'"]').prop('checked', false);
 		}
 	});
 
@@ -95,7 +113,7 @@ $(function() {
 			$('.mobile-menu').animate({
 				left: '0px'
 			}, 200);
-
+			/*
 			$('.main-header').animate({
 				left: '285px'
 			}, 200);
@@ -103,18 +121,17 @@ $(function() {
 			$('body').animate({
 				left: '285px'
 			}, 200);
+			*/
 		});
 	
 		$('.arrows-remove-wrap').on("click", function() {
 
 			$('.arrows-hamburger-wrap').css("opacity", "1");
-
-			$('.mobile-menu').css("visibility", "hidden");
 	
 			$('.mobile-menu').animate({
 				left: '-285px'
-			}, 200);
-
+			}, 200, function(){ $('.mobile-menu').css("visibility", "hidden"); });
+			/*
 			$('.main-header').animate({
 				left: '0px'
 			}, 200);
@@ -122,7 +139,18 @@ $(function() {
 			$('body').animate({
 				left: '0px'
 			}, 200);
+			*/
 		});
+		
+		$('.table-adapt').footable({
+			"filtering": {
+				"enabled": false
+			},
+			"sorting": {
+				"enabled": true
+			},
+		});
+		
 	};
 	
 	$(document).ready(main);

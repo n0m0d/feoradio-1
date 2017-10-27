@@ -5,7 +5,15 @@
 						<a href="#" class="dropdown-button" data-ajax="true"  id="1">Пользователи</a>
 						<ul class="dropdown-list-1">
 							<li class="sectcenter-li">
-								<a href="<?=$GLOBALS['CONFIG']['HTTP_HOST']?>/admin/control/users/" class="ajax-load" id="1-1">Все пользователи</a>
+								<a href="<?=$GLOBALS['CONFIG']['HTTP_HOST']?>/admin/control/users/" class="ajax-load" data-center="false" id="1-1">Все пользователи</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#" class="dropdown-button" data-ajax="true"  id="2">Страницы</a>
+						<ul class="dropdown-list-2">
+							<li class="sectcenter-li">
+								<a href="<?=$GLOBALS['CONFIG']['HTTP_HOST']?>/admin/control/pages/" class="ajax-load" data-center="false" id="2-1">Все страницы</a>
 							</li>
 						</ul>
 					</li>
@@ -16,23 +24,25 @@
 			<div class="sectright-breadcrumbs">
 				<?php
 				$breadcrumbs_last_templ = new Template('<p>{#name#}<p>');
-				$breadcrumbs_templ = new Template('<a href="{#breadcrumb.href#}">{#breadcrumb.name#}</a><span><i class="fa fa-angle-right" aria-hidden="true"></i></span>');
+				$breadcrumbs_templ = new Template('<a href="{#breadcrumb.href#}" class="ajax-load" data-center="false">{#breadcrumb.name#}</a><span><i class="fa fa-angle-right" aria-hidden="true"></i></span>');
 				
-				foreach($this->data['breadcrumbs'] as $name=>$url){
+				if(is_array($this->data['breadcrumbs']))foreach($this->data['breadcrumbs'] as $name=>$url){
 					if ($url == end($this->data['breadcrumbs'])) {
 						$breadcrumbs_last_templ->reset();
 						$breadcrumbs_last_templ->setVar('name', $name);
-						echo $breadcrumbs_last_templ->getDom();
+						echo $breadcrumbs_last_templ;
 					}
 					else {
 						$breadcrumbs_templ->reset();
 						$breadcrumbs_templ->setObject('breadcrumb', [ 'href' => $url, 'name' => $name, ]);
-						echo $breadcrumbs_templ->getDom();
+						echo $breadcrumbs_templ;
 					}
 				}
 				?>
 			</div>
 				<h2><?=$this->data['header']?></h2>
+				<?=$this->data['content']?>
+				<!--
 				<div class="sectright-filters">
 					<nav class="sectright-filters-nav">
 						<ul class="sectright-filters-nav-menu">
@@ -72,6 +82,8 @@
 						
 					</form>
 				</div>
+				-->
+				<!--
 				<div class="sectright-table">
 					<div class="button-wrap-inverse">
 						<a href="#" class="button"><span><i class="fa fa-plus" aria-hidden="true"></i></span>Создать товар</a>
@@ -92,15 +104,18 @@
 						</div>
 					</div>
 					<div class="sectright-table-content">
-						<table>
+						<table class="table-adapt">
+						<thead>
 							<tr>
-								<th><input type="checkbox" name="maincheck" id="maincheck"></th>
+								<th><input type="checkbox" class="check-all" data-name="numbers[]"></th>
 								<th class="left-head"><p>Название</p></th>
-								<th><p>Активность</p></th>
-								<th><p>Сорт.</p></th>
-								<th><p>Дата изменения</p></th>
-								<th><p>ID</p></th>
+								<th data-breakpoints="xs sm"><p>Активность</p></th>
+								<th data-breakpoints="xs"><p>Сорт.</p></th>
+								<th data-breakpoints="xs"><p>Дата изменения</p></th>
+								<th data-breakpoints="xs"><p>ID</p></th>
 							</tr>
+						</thead>
+						<tbody>	
 							<tr>
 								<td><input type="checkbox" name="numbers[]" class="mc" value="0"></td>
 								<td class="left-content"><p>Улучшенный чизбургер</p></td>
@@ -157,7 +172,9 @@
 								<td><p>17.04.2017 10:21:06</p></td>
 								<td><p><span>743</span></p></td>
 							</tr>
+						</tbody>
 						</table>
 					</div>
 				</div>
+				-->
 			</div>

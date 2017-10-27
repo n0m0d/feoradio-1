@@ -303,9 +303,18 @@ class Model
     public function gettablename() {
         return $this->_ct_name;
     }
-    public function db_prefix() {
+    public function getprefix() {
         return $this->_db_prefix;
     }
+	
+    public function getprimarykey() {
+        return $this->_ct_primary_key;
+    }
+	
+    public function getcolumns() {
+        return $this->_ct_cells;
+    }
+	
     public function debug_query_once($new_state=true) {
         $this->_is_debug_query_once = $new_state;
 		return $this;
@@ -678,7 +687,8 @@ class Model
     }
 	
     public function getItem($id, $what='*') {
-		if(is_int($id) AND isset($this->_ct_primary_key)){
+		if(is_numeric($id) AND isset($this->_ct_primary_key)){
+			$id = (int)$id;
 			$ret = $this->getItemWhere("`{$this->_ct_primary_key}`={$id}", $what);
 			return $ret;
 		}

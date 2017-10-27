@@ -24,7 +24,7 @@ class Controller {
 	}
 	
 	function __destruct(){
-		if(is_object($this->view))
+		if(is_object($this->view) and $this->view->isRender())
 			$this->view->render();
 		unset($this->view);
 	}
