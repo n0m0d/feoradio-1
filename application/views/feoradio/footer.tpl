@@ -1,16 +1,16 @@
-	</main>
+</main>
 	<footer class="main-footer">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-3 col-sm-4">
 						<div class="logo-wrap-radio">
 							<a href="/">
-								<img src="/application/views/feoradio/img/footer-logo-radio.png" alt="полезное радио">
+								<img src="/img/footer-logo-radio.png" alt="полезное радио">
 							</a>
 						</div>
 						<div class="logo-wrap-media hidden-xs">
 							<a href="/">
-								<img src="/application/views/feoradio/img/footer-logo-media.png" alt="полезное радио">
+								<img src="/img/footer-logo-media.png" alt="полезное радио">
 							</a>
 						</div>
 						<div class="social-wrap hidden-lg hidden-md hidden-sm">
@@ -58,14 +58,7 @@
 			</div>
 	</footer>
 
-	<div class="sound-button">
-		<span>
-			<i class="fa fa-volume-up on" aria-hidden="true"></i>
-			<i class="fa fa-volume-off off" aria-hidden="true"></i>
-		</span>
-	</div>
-
-	<script src="/application/views/feoradio/js/scripts.min.js"></script>
+	<script src="js/scripts.min.js"></script>
 
 </body>
 </html>

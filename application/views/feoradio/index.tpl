@@ -15,22 +15,22 @@
 			<div class="container">
 				<div class="row">
 					<div class="section-wrap">
-						<div class="row">
+						<div class="row no-margins">
 							<div class="col-md-9">
 								<div class="player-wrap hidden-xs">
-									<audio class="main-radio" src="/application/views/feoradio/mp3/M83-Wait.mp3" preload="auto" controls></audio>
+									<audio class="main-radio" src="/mp3/M83-Wait.mp3" preload="auto" controls></audio>
 									<span class="current-sont"><b>Monody (feat. Laura Brehm)</b> - The fat rat</span>
 									<span class="next-song">Следующий трек: Seether – Let You Down</span>
 								</div>
 								<div class="mini-radio-wrap hidden-lg hidden-md hidden-sm">
 									<span class="current-sont"><b>Monody (feat. Laura Brehm)</b> - The fat rat</span>
-									<audio class="mini-radio hidden-lg hidden-md hidden-sm" src="/application/views/feoradio/mp3/M83-Wait.mp3" preload="auto" controls></audio>
+									<audio class="mini-radio hidden-lg hidden-md hidden-sm" src="/mp3/M83-Wait.mp3" preload="auto" controls></audio>
 								</div>
 								<div class="news-string hidden-xs">
 									<span>Новости одной строкой</span> 200 лет Айвазовскому
 								</div>
 								<div class="camera-wrap">
-									<img class="img-responsive" src="/application/views/feoradio/img/camera.jpg" alt="alt">
+									<img class="img-responsive" src="/img/camera.jpg" alt="alt">
 									<div class="camera-title">
 										<p>Вебкамера в студии</p><span>Наблюдайте за работой наших ведущих в реальном времени</span>
 									</div>
@@ -84,7 +84,7 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="rekl-wrap hidden-lg hidden-md hidden-xs">
-									<img class="img-responsive" src="/application/views/feoradio/img/banner.jpg" alt="alt">
+									<img class="img-responsive" src="/img/banner.jpg" alt="alt">
 								</div>
 							</div>
 						</div>
@@ -152,7 +152,7 @@
 											<div class="title">В Феодосии освятили закладной...</div>
 										</div>
 										<div class="content-sect">
-											<audio class="mini-radio" src="/application/views/feoradio/mp3/M83-Wait.mp3" preload="auto" controls></audio>
+											<audio class="mini-radio" src="/mp3/M83-Wait.mp3" preload="auto" controls></audio>
 										</div>
 									</div>
 									<div class="prog">
@@ -160,7 +160,7 @@
 											<div class="title">В Феодосии освятили закладной...</div>
 										</div>
 										<div class="content-sect">
-											<audio class="mini-radio" src="/application/views/feoradio/mp3/M83-Wait.mp3" preload="auto" controls></audio>
+											<audio class="mini-radio" src="/mp3/M83-Wait.mp3" preload="auto" controls></audio>
 										</div>
 									</div>
 									<div class="prog">
@@ -168,14 +168,14 @@
 											<div class="title">В Феодосии освятили закладной...</div>
 										</div>
 										<div class="content-sect">
-											<audio class="mini-radio" src="/application/views/feoradio/mp3/M83-Wait.mp3" preload="auto" controls></audio>
+											<audio class="mini-radio" src="/mp3/M83-Wait.mp3" preload="auto" controls></audio>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-3 hidden-sm">
 								<div class="rekl-wrap">
-									<img class="img-responsive" src="/application/views/feoradio/img/banner.jpg" alt="alt">
+									<img class="img-responsive" src="/img/banner.jpg" alt="alt">
 								</div>
 							</div>
 						</div>

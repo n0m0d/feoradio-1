@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
 	<meta charset="utf-8">
@@ -10,21 +11,18 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-	<meta property="og:image" content="/application/views/feoradio/path/to/image.jpg">
-	<link rel="shortcut icon" href="/application/views/feoradio/img/favicon/favicon.ico" type="image/x-icon">
-	<link rel="apple-touch-icon" href="/application/views/feoradio/img/favicon/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="/application/views/feoradio/img/favicon/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="/application/views/feoradio/img/favicon/apple-touch-icon-114x114.png">
+	<meta property="og:image" content="path/to/image.jpg">
+	<link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-touch-icon-114x114.png">
 
-	<link rel="stylesheet" href="/application/views/feoradio/libs/simple-line-icons/css/simple-line-icons.css">
-	<link rel="stylesheet" href="/application/views/feoradio/libs/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/application/views/feoradio/css/main.min.css">
+	<link rel="stylesheet" href="libs/simple-line-icons/css/simple-line-icons.css">
+	<link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/main.min.css">
 
-	<!-- Chrome, Firefox OS and Opera -->
 	<meta name="theme-color" content="#000">
-	<!-- Windows Phone -->
 	<meta name="msapplication-navbutton-color" content="#000">
-	<!-- iOS Safari -->
 	<meta name="apple-mobile-web-app-status-bar-style" content="#000">
 	<?php wp_print_styles();?>
 	<?php wp_print_scripts();?>
@@ -36,9 +34,9 @@
 			<div class="row">
 				<nav class="main-menu hidden-xs">
 					<ul>
-						<li class="<?=$this->data['menu']['index']?>"><a href="/"><span class="icon-home"></span></a></li>
-						<li class="<?=(strpos(Registry::get('REQUEST_URI'), "onas.html")?"active":"")?>"><a href="onas.html">О нас</a></li>
-						<li class="<?=(strpos(Registry::get('REQUEST_URI'), "vedushie.html")?"active":"")?>"><a href="vedushie.html">Ведущие</a></li>
+						<li class="active"><a href="<?=$this->data['menu']['index']?>"><span class="icon-home"></span></a></li>
+						<li><a href="<?=(strpos(Registry::get('REQUEST_URI'), "onas.html")?"active":"")?>">О нас</a></li>
+						<li><a href="<?=(strpos(Registry::get('REQUEST_URI'), "vedushie.html")?"active":"")?>">Ведущие</a></li>
 						<li><a href="novosti.html">Новости</a></li>
 						<li><a href="arhiv.html">Архив</a></li>
 						<li><a href="vizitki.html">Визитки программ</a></li>
@@ -61,7 +59,7 @@
 						<div class="col-sm-3 col-xs-6">
 							<div class="logo-wrap">
 								<a href="/">
-									<img src="/application/views/feoradio/img/logo.png" alt="полезное радио">
+									<img src="/img/logo.png" alt="полезное радио">
 								</a>
 							</div>
 						</div>
@@ -110,9 +108,9 @@
 					</div>
 					<a href="#" class="toggle-menu hidden-lg hidden-md hidden-sm"><span></span></a>
 					<ul class="toggle-mobile-menu">
-						<li><a href="/">Главная</a></li>
-						<li><a href="onas.html">О нас</a></li>
-						<li><a href="vedushie.html">Ведущие</a></li>
+						<li><a href="<?=$this->data['menu']['index']?>">Главная</a></li>
+						<li><a href="<?=(strpos(Registry::get('REQUEST_URI'), "onas.html")?"active":"")?>">О нас</a></li>
+						<li><a href="<?=(strpos(Registry::get('REQUEST_URI'), "vedushie.html")?"active":"")?>">Ведущие</a></li>
 						<li><a href="novosti.html">Новости</a></li>
 						<li><a href="arhiv.html">Архив</a></li>
 						<li><a href="vizitki.html">Визитки программ</a></li>
@@ -125,5 +123,4 @@
 			</div>
 		</div>
 	</header>
-
 	<main class="main-content">
